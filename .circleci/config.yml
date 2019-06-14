@@ -1,0 +1,24 @@
+# Use the latest 2.1 version of CircleCI pipeline processing engine, see https://circleci.com/docs/2.0/configuration-reference/
+version: 2
+
+# Orchestrate or schedule a set of jobs, see https://circleci.com/docs/2.0/workflows/
+workflows:
+  version: 2
+  build-and-deploy:
+    # Run the welcome/run job in its own container
+    jobs:
+      - build
+
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.5.0-node-browsers
+    steps:
+      - checkout
+      - run: env | sort
+      - run:
+        command: |
+          sudo apt-get -y -qq update
+          sudo apt-get install python-pip python-dev build-essential
+          sudo pip install awscli
+      - run: echo "hello world!!"
