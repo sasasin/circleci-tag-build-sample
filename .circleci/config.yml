@@ -7,6 +7,10 @@ workflows:
   build-and-deploy:
     jobs:
       - build
+      - master-tag-push:
+          filters:
+            branches:
+              only: master
       - tag-sample:
           filters:
             tags:
@@ -28,6 +32,14 @@ jobs:
             sudo pip install awscli
             aws --version
       - run: echo "hello world!!"
+
+  master-tag-push:
+    docker:
+      - image: circleci/ruby:2.5.0-node-browsers
+    steps:
+      - checkout
+      - run: git tag $(date "+%Y%m%d-%H%M%S")
+      - run: git push origin --tags
 
   tag-sample:
     docker:
