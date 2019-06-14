@@ -6,7 +6,8 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build:
+      - build
+      - tag-sample:
           filters:
             tags:
               only: /^[0-9]{8}/
@@ -25,3 +26,11 @@ jobs:
             sudo pip install awscli
             aws --version
       - run: echo "hello world!!"
+
+  tag-sample:
+    docker:
+      - image: circleci/ruby:2.5.0-node-browsers
+    steps:
+      - checkout
+      - run: env | sort
+      - run: echo "hello tag!!"
