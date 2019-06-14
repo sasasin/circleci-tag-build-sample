@@ -17,9 +17,9 @@ jobs:
       - checkout
       - run: env | sort
       - run:
-        command: |
-          sudo apt-get -y -qq update
-          sudo apt-get install python-pip python-dev build-essential
-          sudo pip install awscli
-          aws --version
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install awscli
+            aws --version
       - run: echo "hello world!!"
