@@ -10,8 +10,6 @@ workflows:
           filters:
             tags:
               only: /^[0-9]{8}/
-            branches:
-              only: master
 
 jobs:
   build:
