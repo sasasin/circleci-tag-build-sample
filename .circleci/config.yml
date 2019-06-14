@@ -33,4 +33,9 @@ jobs:
     steps:
       - checkout
       - run: env | sort
-      - run: echo "hello tag!!"
+      - run: |
+          if [ -v $CIRCLE_TAG]; then
+            echo "exists $CIRCLE_TAG"
+          else
+            echo "not exists $CIRCLE_TAG"
+          fi
