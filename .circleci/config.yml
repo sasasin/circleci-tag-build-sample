@@ -22,6 +22,8 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.5.0-node-browsers
+        environment:
+          HOGE: $HOGE_EXT
     steps:
       - checkout
       - run: env | sort
