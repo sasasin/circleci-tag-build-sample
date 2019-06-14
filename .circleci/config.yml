@@ -7,14 +7,10 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - master-tag-push:
-          filters:
-            branches:
-              only: master
       - tag-sample:
           filters:
             tags:
-              only: /^[0-9]{8}/
+              only: /.*/
             branches:
               ignore: /.*/
 
@@ -22,8 +18,6 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.5.0-node-browsers
-        environment:
-          HOGE: $HOGE_EXT
     steps:
       - checkout
       - run: env | sort
@@ -35,23 +29,9 @@ jobs:
             aws --version
       - run: echo "hello world!!"
 
-  master-tag-push:
-    docker:
-      - image: circleci/ruby:2.5.0-node-browsers
-    steps:
-      - checkout
-      - run: git tag $(date "+%Y%m%d-%H%M%S")
-      - run: git push origin --tags
-
   tag-sample:
     docker:
       - image: circleci/ruby:2.5.0-node-browsers
     steps:
       - checkout
       - run: env | sort
-      - run: |
-          if [ $(env | grep -E '^CIRCLE_TAG=' | wc -l) = "1" ]; then
-            echo "exists $CIRCLE_TAG"
-          else
-            echo "not exists $CIRCLE_TAG"
-          fi
