@@ -34,7 +34,7 @@ jobs:
       - checkout
       - run: env | sort
       - run: |
-          if [ -v $CIRCLE_TAG]; then
+          if [ -n $CIRCLE_TAG]; then
             echo "exists $CIRCLE_TAG"
           else
             echo "not exists $CIRCLE_TAG"
